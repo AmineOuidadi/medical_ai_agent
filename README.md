@@ -1,135 +1,287 @@
-# Medical_AI_Agent
+﻿# Medical_AI_Agent
 
-## Project Overview
+## 1. Project Title
 
-Medical_AI_Agent is an AI-driven medical assistant backend developed using FastAPI and Python. The backend is currently completed and functional, providing the core API, modular agent orchestration, and support services required for a medical assistance workflow.
+Medical_AI_Agent
 
-## Current Advancement Status
+## 2. Project Overview
 
-- Backend development: Completed and operational.
-- Core features: Implemented and validated.
-- Service readiness: Backend is functional for integration testing and deployment.
-- Frontend: Present in the workspace but not the focus of this progress report.
+Medical_AI_Agent is a full-stack AI medical assistant application developed for university-level engineering submission. The system integrates a Python-based backend, a React frontend, and an AI-powered multi-agent workflow to support patient intake, clinical question management, physician review, and final report generation.
 
-## Backend Completed Features
+## 3. Problem Statement
 
-- FastAPI application with structured routing and dependency handling.
-- Modular AI agents for diagnostics, reporting, physician review, and supervision.
-- Tool integration for patient management, care orchestration, and MCP communication.
-- Graph-based state and workflow management.
-- API endpoints for service interaction and agent coordination.
+Clinical triage can be fragmented and time-consuming, and clinicians need tools that help collect symptom data, structure clinical reasoning, and preserve human oversight. This project addresses those challenges with an AI-assisted workflow that combines automation with physician validation.
 
-## Technologies Used
+## 4. Objectives
 
-- Python 3.x
+- Deliver a complete full-stack medical assistant system.
+- Implement a REST API backend with multi-agent AI orchestration.
+- Build a responsive frontend for patient interaction and clinician validation.
+- Demonstrate integration of LangChain, LangGraph, Ollama, and MCP.
+- Produce a professional academic report and maintainable project structure.
+
+## 5. System Architecture
+
+The system consists of three core components:
+
+- **Frontend**: React application for patient case submission, question flow, physician review, and final report display.
+- **Backend**: FastAPI service that exposes clinical workflow endpoints and manages consultation state.
+- **AI Agents**: A multi-agent workflow powered by LangGraph and LangChain, with Ollama providing the language model.
+
+The architecture supports a sequential medico-technical flow:
+1. Patient case intake through the frontend.
+2. Diagnostic question generation and response collection.
+3. Physician review and treatment validation.
+4. Final structured report generation.
+
+## 6. Technologies Used
+
+### Backend
+- Python
 - FastAPI
+- LangChain
+- LangGraph
+- Ollama
+- MCP server
 - Pydantic
-- Uvicorn (for application serving)
-- JSON-based state and configuration management
-- GitHub Classroom compatible project layout
+- Uvicorn
 
-## Architecture and Modules Implemented
+### Frontend
+- React
+- JavaScript / TypeScript
+- HTML
+- CSS
+- Axios
 
-- `backend/app/api.py`: FastAPI route definitions and API entry points.
-- `backend/app/graph.py`: Graph workflow and state handling logic.
-- `backend/app/state.py`: State management for agent interactions.
-- `backend/app/nodes/`: Modular AI agent components:
-  - `diagnostic_agent.py`
-  - `physician_review.py`
-  - `report_agent.py`
-  - `supervisor.py`
-- `backend/app/tools/`: Supporting tools and utilities:
-  - `care_tools.py`
-  - `patient_tools.py`
-  - `mcp_client.py`
-- `backend/mcp_server/server.py`: MCP server implementation and communication support.
+## 7. Project Structure
 
-## APIs Developed
+`	ext
+Medical_AI_Agent/
+├── backend/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── api.py
+│   │   ├── graph.py
+│   │   ├── state.py
+│   │   ├── nodes/
+│   │   │   ├── diagnostic_agent.py
+│   │   │   ├── physician_review.py
+│   │   │   ├── report_agent.py
+│   │   │   └── supervisor.py
+│   │   └── tools/
+│   │       ├── care_tools.py
+│   │       ├── mcp_client.py
+│   │       └── patient_tools.py
+│   ├── mcp_server/
+│   │   ├── server.py
+│   │   └── data/
+│   ├── langgraph.json
+│   └── requirements.txt
+├── frontend/
+│   ├── package.json
+│   ├── public/
+│   └── src/
+│       ├── App.tsx
+│       ├── pages/
+│       │   └── ConsultationPage.tsx
+│       ├── components/
+│       │   ├── QuestionCard.tsx
+│       │   ├── PhysicianPanel.tsx
+│       │   └── ReportView.tsx
+│       ├── services/
+│       │   └── api.ts
+│       └── types/
+│           └── index.ts
+└── README.md
+`
 
-- RESTful endpoints exposed through `backend/app/api.py`.
-- Endpoints support agent invocation, workflow progression, and data exchange.
-- API design is consistent with FastAPI conventions for request validation and response modeling.
+## 8. Backend Description
 
-## Database Integration
+The backend is implemented with FastAPI and serves as the central workflow manager. It exposes consultation endpoints and orchestrates an AI state graph with distinct agent nodes.
 
-- Current implementation uses JSON and in-memory state management.
-- No external database is integrated at this stage.
-- Data persistence is managed through application state and configuration files.
+### Backend responsibilities
+- Expose REST endpoints for consultation creation, patient answers, physician review, and report retrieval.
+- Use LangGraph to construct a multi-node workflow with state persistence.
+- Coordinate LangChain + Ollama to generate clinical summaries and final reports.
+- Maintain session state across multiple HTTP requests using MCP memory persistence.
 
-## Authentication System
+### Core backend modules
+- ackend/app/api.py: API endpoint definitions and request handlers.
+- ackend/app/graph.py: Graph construction and node routing using LangGraph.
+- ackend/app/state.py: Consultation state model.
+- ackend/app/nodes/: AI agent nodes for diagnostics, physician review, and reporting.
+- ackend/app/tools/: Utility helpers for clinical questions, care recommendations, and MCP integration.
 
-- Authentication is not yet implemented in the backend.
-- The current focus remains on core agent orchestration and API functionality.
-- Authentication may be introduced in a later phase for secure service access.
+## 9. Frontend Description
 
-## Error Handling
+The frontend is a React application that guides users through a clinical consultation workflow. It provides a modern and responsive interface for both patient and clinician interactions.
 
-- API-level error handling is provided through FastAPI exception handling.
-- Input validation and request validation use Pydantic models.
-- Module-level safeguards support consistent failure reporting and traceability.
+### Frontend functionality
+- Patient case submission screen.
+- Interactive question flow with answer submission.
+- Physician review panel for clinical validation.
+- Final report display with structured consultation output.
 
-## Testing Status
+### Frontend components
+- App.tsx: Application entry point.
+- ConsultationPage.tsx: Main workflow page and state management.
+- QuestionCard.tsx: Displays questions and captures patient input.
+- PhysicianPanel.tsx: Presents clinical summary and treatment input.
+- ReportView.tsx: Displays the generated final report.
+- services/api.ts: Axios-based API client.
+- 	ypes/index.ts: TypeScript interfaces for API responses.
 
-- Backend functionality has been manually validated through development workflow tests.
-- Automated unit tests are not currently included in the repository.
-- The system is ready for formal test case development and integration testing.
+## 10. AI Multi-Agent System Workflow
 
-## Remaining Tasks / Next Steps
+The AI workflow follows a clear multi-agent process:
 
-- Add authentication and authorization support.
-- Introduce persistent database integration for patient and workflow data.
-- Implement automated unit and integration tests.
-- Expand API documentation and OpenAPI coverage.
-- Finalize frontend integration if required for end-to-end validation.
+1. **Supervisor Agent**
+   - Evaluates consultation state and selects the next workflow node.
+   - Routes execution to diagnostic questioning, physician review, or report generation.
 
-## Project Structure
+2. **Diagnostic Agent**
+   - Asks a fixed set of clinical questions.
+   - Collects patient answers and generates a preliminary clinical summary.
+   - Produces interim care guidance.
 
-- `backend/`
-  - `app/`
-    - `__init__.py`
-    - `api.py`
-    - `graph.py`
-    - `state.py`
-    - `nodes/`
-      - `diagnostic_agent.py`
-      - `physician_review.py`
-      - `report_agent.py`
-      - `supervisor.py`
-    - `tools/`
-      - `care_tools.py`
-      - `mcp_client.py`
-      - `patient_tools.py`
-  - `mcp_server/`
-    - `server.py`
-    - `data/`
-  - `langgraph.json`
-  - `requirements.txt`
-- `frontend/`
-- `README.md`
+3. **Physician Review Node**
+   - Pauses the workflow and waits for physician treatment input.
+   - Ensures a human-in-the-loop validation step.
 
-## Installation and Execution
+4. **Report Agent**
+   - Builds a final structured medical report using the collected state.
+   - Includes consultation metadata, summary, interim recommendations, physician treatment, and a disclaimer.
 
-1. Clone the repository.
-2. Create and activate a Python virtual environment.
-3. Install dependencies:
+5. **State Persistence**
+   - Uses MemorySaver to preserve consultation progress between API calls.
+   - Enables a seamless multi-step frontend experience.
 
-```bash
-pip install -r backend/requirements.txt
-```
+## 11. Features Implemented
 
-4. Run the FastAPI backend from the project root:
+- Full-stack consultation workflow.
+- REST API for patient and physician interactions.
+- AI-driven diagnostic summary generation.
+- Human-in-the-loop physician review.
+- Structured final report creation.
+- Responsive React frontend.
+- Session state persistence with MCP.
+- Health monitoring endpoint.
 
-```bash
+## 12. Installation Guide
+
+### Backend installation
+1. Clone the repository:
+   `ash
+   git clone <repository-url>
+   cd Medical_AI_Agent
+   `
+2. Create a Python virtual environment:
+   `ash
+   python -m venv .venv
+   `
+3. Activate the virtual environment:
+   - PowerShell:
+     `powershell
+     .venv\Scripts\Activate.ps1
+     `
+   - Bash:
+     `ash
+     source .venv/Scripts/activate
+     `
+4. Install dependencies:
+   `ash
+   pip install -r backend/requirements.txt
+   `
+5. Configure environment variables in .env if needed:
+   `	ext
+   OLLAMA_MODEL=llama3.2
+   OLLAMA_BASE_URL=http://localhost:11434
+   `
+
+### Frontend installation
+1. Navigate to the frontend directory:
+   `ash
+   cd frontend
+   `
+2. Install dependencies:
+   `ash
+   npm install
+   `
+
+## 13. How to Run the Project
+
+### Start the backend
+From the project root:
+`ash
 uvicorn backend.app.api:app --reload --host 0.0.0.0 --port 8000
-```
+`
 
-5. Access the API documentation at:
+### Start the frontend
+From rontend/:
+`ash
+npm start
+`
 
-```text
-http://127.0.0.1:8000/docs
-```
+### Access
+- Frontend: http://localhost:3000
+- API docs: http://localhost:8000/docs
 
-## Notes
+## 14. API Endpoints
 
-- This project report is focused on current backend progress.
-- The backend is complete and functional, suitable for academic submission and further extension.
+- POST /consultation/start
+  - Start a new consultation session.
+  - Request body: {  patient_case: ... }
+
+- POST /consultation/{thread_id}/answer
+  - Submit a patient answer.
+  - Request body: { answer: ... }
+
+- POST /consultation/{thread_id}/physician-review
+  - Submit physician treatment validation.
+  - Request body: { treatment: ... }
+
+- GET /consultation/{thread_id}
+  - Retrieve current consultation state.
+
+- GET /consultation/{thread_id}/report
+  - Retrieve the final structured report.
+
+- GET /health
+  - Check service status.
+
+## 15. Screenshots
+
+> Add actual screenshots under screenshots/ before final submission.
+
+`markdown
+![Patient Intake](screenshots/patient-intake.png)
+![Question Flow](screenshots/question-flow.png)
+![Physician Review](screenshots/physician-review.png)
+![Final Report](screenshots/final-report.png)
+`
+
+## 16. Challenges Faced
+
+- Building a stable multi-agent workflow with state persistence.
+- Synchronizing frontend state with backend session lifecycle.
+- Writing AI prompts that maintain clinical structure and safety.
+- Ensuring modular code design across backend and frontend.
+
+## 17. Future Improvements
+
+- Add authentication and authorization.
+- Integrate a persistent database for clinical records.
+- Add automated backend and frontend tests.
+- Introduce Docker deployment and cloud hosting support.
+- Improve UX and accessibility on the frontend.
+- Expand AI safety and medical validation layers.
+
+## 18. Conclusion
+
+Medical_AI_Agent provides a complete full-stack medical assistant solution suitable for academic evaluation. The project showcases modern backend architecture, responsive frontend design, and advanced AI workflow orchestration.
+
+## 19. Author Information
+
+- Author: [Ouidadi Mohammed-AMine]
+- Institution: [Ecole Marocaine Des Sciences D'ingenieures (EMSI)]
+- Project: Medical_AI_Agent
